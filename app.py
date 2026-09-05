@@ -28,7 +28,7 @@ from components.styles import CUSTOM_CSS
 # ──────────────────────────────────────────
 st.set_page_config(
     page_title="HazardHub AI — Autonomous Hazmat Pooling",
-    page_icon="🧪",
+    page_icon="HH",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -76,8 +76,17 @@ header_cols = st.columns([3, 6, 2])
 with header_cols[0]:
     st.markdown(
         """
-        <div style="display: flex; align-items: center; gap: 10px; padding: 6px 0;">
-            <span style="font-size: 28px;">🧪</span>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 6px 0;">
+            <div style="
+                width: 40px; height: 40px;
+                background: linear-gradient(135deg, #00875A 0%, #006B4E 100%);
+                border-radius: 10px;
+                display: flex; align-items: center; justify-content: center;
+                flex-shrink: 0;
+                box-shadow: 0 2px 8px rgba(0,135,90,0.25);
+            ">
+                <span style="color: #FFFFFF; font-size: 14px; font-weight: 900; letter-spacing: -0.5px; font-family: 'Inter', sans-serif;">HH</span>
+            </div>
             <div style="display: flex; flex-direction: column;">
                 <div class="hh-brand-title" style="margin: 0; line-height: 1.1;">
                     Hazard<span class="green">Hub</span>&nbsp;<span style="color:#00875A;">AI</span>
@@ -178,15 +187,15 @@ if st.session_state.active_nav == "Home":
 
     hero_btn1, hero_btn2, hero_btn3, hero_spacer = st.columns([2, 2, 2, 4])
     with hero_btn1:
-        if st.button("🚀 Launch Live Platform", type="primary", use_container_width=True):
+        if st.button("Launch Live Platform", type="primary", use_container_width=True):
             st.session_state.active_nav = "Platform"
             st.rerun()
     with hero_btn2:
-        if st.button("🤖 AI Operations Agent", use_container_width=True):
+        if st.button("AI Operations Agent", use_container_width=True):
             st.session_state.active_nav = "AI Operations"
             st.rerun()
     with hero_btn3:
-        if st.button("📦 1-Click Pooling (≥150L)", use_container_width=True):
+        if st.button("1-Click Pooling (>=150L)", use_container_width=True):
             st.session_state.active_nav = "Pickup Pooling"
             st.rerun()
 
@@ -196,7 +205,7 @@ if st.session_state.active_nav == "Home":
         <div class="hh-card" style="margin-top: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F1F5F9; padding-bottom: 12px; margin-bottom: 16px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="color: #00875A; font-weight: 800; font-size: 13px;">📡 LIVE REGIONAL TELEMETRY</span>
+                    <span style="color: #00875A; font-weight: 800; font-size: 13px;">LIVE REGIONAL TELEMETRY</span>
                 </div>
                 <span class="hh-brand-badge">{len(state.labs)} Facilities Synced</span>
             </div>
@@ -241,7 +250,7 @@ if st.session_state.active_nav == "Home":
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
                 <div style="background: #FFF1F2; border: 1px solid #FECDD3; border-radius: 20px; padding: 28px;">
                     <div style="font-size: 1.1rem; font-weight: 800; color: #9F1239; margin-bottom: 8px;">
-                        ⚠️ The Rigid 150-Liter Collection Hurdle
+                        The Rigid 150-Liter Collection Hurdle
                     </div>
                     <p style="font-size: 0.92rem; color: #881337; line-height: 1.55;">
                         A high school AP chem lab has 6L of nitric acid; a dental clinic has 12L of spent sterilant; a vet clinic has 10L of formalin. 
@@ -253,7 +262,7 @@ if st.session_state.active_nav == "Home":
                 </div>
                 <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 20px; padding: 28px;">
                     <div style="font-size: 1.1rem; font-weight: 800; color: #166534; margin-bottom: 8px;">
-                        🌱 Cooperative Algorithmic Aggregation
+                        Cooperative Algorithmic Aggregation
                     </div>
                     <p style="font-size: 0.92rem; color: #14532D; line-height: 1.55;">
                         HazardHub AI unites regional laboratories into a cooperative pool. 
@@ -289,7 +298,9 @@ if st.session_state.active_nav == "Home":
         st.markdown(
             """
             <div class="hh-card">
-                <div style="font-size: 24px; margin-bottom: 8px;">🛡️</div>
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg,#E6F8F3,#D1FAE5); border-radius: 10px; display:flex; align-items:center; justify-content:center; margin-bottom: 10px;">
+                <span style="font-size: 16px; font-weight: 900; color: #00875A; font-family: 'JetBrains Mono', monospace;">CG</span>
+            </div>
                 <strong style="color: #0A192F; font-size: 1.05rem;">ChemiGuard</strong>
                 <div style="font-size: 11px; font-weight: 700; color: #00875A; margin: 2px 0 8px 0;">EPA 40 CFR App. V</div>
                 <p style="font-size: 0.85rem; color: #475569; line-height: 1.45;">
@@ -303,7 +314,9 @@ if st.session_state.active_nav == "Home":
         st.markdown(
             """
             <div class="hh-card">
-                <div style="font-size: 24px; margin-bottom: 8px;">📦</div>
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg,#EDE9FE,#DDD6FE); border-radius: 10px; display:flex; align-items:center; justify-content:center; margin-bottom: 10px;">
+                <span style="font-size: 16px; font-weight: 900; color: #6D28D9; font-family: 'JetBrains Mono', monospace;">QP</span>
+            </div>
                 <strong style="color: #0A192F; font-size: 1.05rem;">QuotaPacker</strong>
                 <div style="font-size: 11px; font-weight: 700; color: #00875A; margin: 2px 0 8px 0;">Knapsack Optimizer</div>
                 <p style="font-size: 0.85rem; color: #475569; line-height: 1.45;">
@@ -317,7 +330,9 @@ if st.session_state.active_nav == "Home":
         st.markdown(
             """
             <div class="hh-card">
-                <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg,#FEF3C7,#FDE68A); border-radius: 10px; display:flex; align-items:center; justify-content:center; margin-bottom: 10px;">
+                <span style="font-size: 16px; font-weight: 900; color: #B45309; font-family: 'JetBrains Mono', monospace;">RG</span>
+            </div>
                 <strong style="color: #0A192F; font-size: 1.05rem;">ResilienceGuard</strong>
                 <div style="font-size: 11px; font-weight: 700; color: #00875A; margin: 2px 0 8px 0;">Adaptive Recovery</div>
                 <p style="font-size: 0.85rem; color: #475569; line-height: 1.45;">
@@ -331,7 +346,9 @@ if st.session_state.active_nav == "Home":
         st.markdown(
             """
             <div class="hh-card">
-                <div style="font-size: 24px; margin-bottom: 8px;">🔏</div>
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg,#E0F2FE,#BAE6FD); border-radius: 10px; display:flex; align-items:center; justify-content:center; margin-bottom: 10px;">
+                <span style="font-size: 16px; font-weight: 900; color: #0369A1; font-family: 'JetBrains Mono', monospace;">CS</span>
+            </div>
                 <strong style="color: #0A192F; font-size: 1.05rem;">CustodySentinel</strong>
                 <div style="font-size: 11px; font-weight: 700; color: #00875A; margin: 2px 0 8px 0;">Cryptographic Custody</div>
                 <p style="font-size: 0.85rem; color: #475569; line-height: 1.45;">
@@ -410,22 +427,22 @@ if st.session_state.active_nav == "Home":
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
                         <div style="padding: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px;">
-                            💬 <strong>"Can we bundle a pickup lot for tomorrow?"</strong><br/>
+                            <strong>"Can we bundle a pickup lot for tomorrow?"</strong><br/>
                             <span style="color: #64748B; font-size: 0.8rem;">Invokes QuotaPacker optimizer to evaluate eligible regional waste.</span>
                         </div>
                         <div style="padding: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px;">
-                            💬 <strong>"What urgent waste is expiring soon?"</strong><br/>
+                            <strong>"What urgent waste is expiring soon?"</strong><br/>
                             <span style="color: #64748B; font-size: 0.8rem;">Filters unoffloaded containers with &le;14 days shelf life.</span>
                         </div>
                         <div style="padding: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px;">
-                            💬 <strong>"Is Nitric Acid safe with Acetone?"</strong><br/>
+                            <strong>"Is Nitric Acid safe with Acetone?"</strong><br/>
                             <span style="color: #64748B; font-size: 0.8rem;">ChemiGuard instantly flags violent oxidation/explosion risk under EPA 40 CFR.</span>
                         </div>
                     </div>
                 </div>
                 <div style="background: #F0FDFA; border: 1px solid #CCFBF1; border-radius: 16px; padding: 20px; font-size: 0.85rem; color: #134E4A;">
                     <div style="font-weight: 800; font-size: 0.95rem; margin-bottom: 6px;">
-                        🤖 Operations Agent Response Sample:
+                        Operations Agent Response Sample:
                     </div>
                     <p style="margin: 0 0 10px 0;">
                         <em>"Yes, we can immediately schedule a regional pickup! I executed QuotaPacker and assembled 184.0 Liters across 5 facilities with 2 standby reserves. 100% EPA compliant."</em>
@@ -549,7 +566,7 @@ if st.session_state.active_nav == "Home":
         <div class="landing-section" style="border-bottom: none;">
             <div class="cta-banner">
                 <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(255,255,255,0.2); border-radius: 9999px; font-size: 11px; font-weight: 700; margin-bottom: 12px;">
-                    <span>🌱 OAKS AI BUILDERS CHALLENGE</span>
+                    <span>OAKS AI BUILDERS CHALLENGE</span>
                 </div>
                 <h2 style="font-size: 2.4rem; font-weight: 900; margin: 0 0 12px 0;">
                     Ready to Coordinate Safe Regional Hazmat Logistics?
@@ -565,15 +582,15 @@ if st.session_state.active_nav == "Home":
 
     cta_c1, cta_c2, cta_c3 = st.columns([1, 1, 1])
     with cta_c1:
-        if st.button("🚀 Launch Live Platform Now", type="primary", use_container_width=True, key="cta_plat"):
+        if st.button("Launch Live Platform Now", type="primary", use_container_width=True, key="cta_plat"):
             st.session_state.active_nav = "Platform"
             st.rerun()
     with cta_c2:
-        if st.button("🤖 Try AI Operations Agent", use_container_width=True, key="cta_agent"):
+        if st.button("Try AI Operations Agent", use_container_width=True, key="cta_agent"):
             st.session_state.active_nav = "AI Operations"
             st.rerun()
     with cta_c3:
-        if st.button("🏢 View 8 Local Laboratories", use_container_width=True, key="cta_labs"):
+        if st.button("View 8 Local Laboratories", use_container_width=True, key="cta_labs"):
             st.session_state.active_nav = "Labs"
             st.rerun()
 
@@ -583,7 +600,14 @@ if st.session_state.active_nav == "Home":
         <div class="corporate-footer">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 24px; margin-bottom: 24px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <span style="font-size: 22px;">🧪</span>
+                    <div style="
+                        width: 30px; height: 30px;
+                        background: linear-gradient(135deg, #00875A 0%, #006B4E 100%);
+                        border-radius: 7px;
+                        display: flex; align-items: center; justify-content: center;
+                    ">
+                        <span style="color: #FFFFFF; font-size: 11px; font-weight: 900;">HH</span>
+                    </div>
                     <span style="font-weight: 900; font-size: 1.2rem; color: #0A192F;">Hazard<span style="color:#00875A;">Hub</span>&nbsp;AI</span>
                 </div>
                 <div style="font-size: 12px; color: #64748B;">
@@ -695,7 +719,7 @@ elif st.session_state.active_nav == "Platform":
                         {total_available_vol:.1f} / 150.0 L ({quota_pct:.0f}%)
                     </span>
                     <span style="font-size:12px; font-weight:bold; color:{'#00875A' if is_met else '#DC2626'}; margin-left:6px;">
-                        {'✓ THRESHOLD MET' if is_met else f'⚠️ SHORT BY {threshold - total_available_vol:.1f} L'}
+                        {'OK THRESHOLD MET' if is_met else f'SHORT BY {threshold - total_available_vol:.1f} L'}
                     </span>
                 </div>
             </div>
@@ -715,11 +739,11 @@ elif st.session_state.active_nav == "Platform":
     # Fast Actions
     pb_col1, pb_col2 = st.columns(2)
     with pb_col1:
-        if st.button("📦 Go to Pickup Pooling & Optimizer", type="primary", use_container_width=True):
+        if st.button("Go to Pickup Pooling & Optimizer", type="primary", use_container_width=True):
             st.session_state.active_nav = "Pickup Pooling"
             st.rerun()
     with pb_col2:
-        if st.button("🧪 Inspect Waste Inventory (30 Items)", use_container_width=True):
+        if st.button("Inspect Waste Inventory (30 Items)", use_container_width=True):
             st.session_state.active_nav = "Waste Management"
             st.rerun()
 
@@ -775,9 +799,9 @@ elif st.session_state.active_nav == "Labs":
                         <span class="badge-medium">{lab.id}</span>
                     </div>
                     <p style="font-size: 13px; color: #475569; margin: 10px 0 4px 0; line-height: 1.5;">
-                        📍 {lab.address}<br/>
-                        🚪 <strong>Storage:</strong> {lab.storage_location}<br/>
-                        👤 <strong>Contact:</strong> {lab.contact_person} ({lab.phone})
+                        {lab.address}<br/>
+                        <strong>Storage:</strong> {lab.storage_location}<br/>
+                        <strong>Contact:</strong> {lab.contact_person} ({lab.phone})
                     </p>
                 </div>
                 """,
@@ -1250,7 +1274,7 @@ elif st.session_state.active_nav == "Chain of Custody":
                 st.rerun()
 
         # Custody Ledger
-        st.markdown("### 📋 Custody Audit Ledger")
+        st.markdown("### Custody Audit Ledger")
         lot_events = [e for e in state.custody_events if e.lot_id == target_lot.id]
         if lot_events:
             event_rows = []
@@ -1275,7 +1299,7 @@ elif st.session_state.active_nav == "About":
         """
         <div style="margin-bottom: 24px;">
             <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; background: #E6F8F3; border: 1px solid #A3E8D5; border-radius: 9999px; color: #006B4E; font-size: 11px; font-weight: 700; margin-bottom: 12px;">
-                <span>🌱 OAKS AI BUILDERS CHALLENGE SUBMISSION</span>
+                <span>OAKS AI BUILDERS CHALLENGE SUBMISSION</span>
             </div>
             <h1 style="margin:0; font-weight:900; color:#0A192F; font-size: 2.8rem; letter-spacing:-0.03em;">
                 Pioneering Cooperative Environmental Safety for Small Laboratories

@@ -20,6 +20,137 @@ header[data-testid="stHeader"] {
     background: transparent;
 }
 
+/* ── Selectbox / Dropdown ──────────────────────────────── */
+[data-testid="stSelectbox"] > div > div {
+    background-color: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 10px !important;
+    color: #0A192F !important;
+    box-shadow: none !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: border-color 0.18s ease;
+}
+[data-testid="stSelectbox"] > div > div:hover {
+    border-color: #00875A !important;
+}
+[data-testid="stSelectbox"] > div > div > div {
+    color: #0A192F !important;
+    background-color: #FFFFFF !important;
+}
+/* Dropdown option list */
+[data-baseweb="popover"] {
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12) !important;
+    overflow: hidden;
+}
+[data-baseweb="popover"] ul {
+    background-color: #FFFFFF !important;
+    padding: 6px !important;
+}
+[data-baseweb="popover"] li {
+    background-color: #FFFFFF !important;
+    color: #0A192F !important;
+    border-radius: 8px !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    padding: 8px 12px !important;
+    margin: 2px 0 !important;
+}
+[data-baseweb="popover"] li:hover {
+    background-color: #F0FDF4 !important;
+    color: #00875A !important;
+}
+[data-baseweb="popover"] li[aria-selected="true"] {
+    background-color: #E6F8F3 !important;
+    color: #006B4E !important;
+    font-weight: 600 !important;
+}
+/* SVG chevron icon */
+[data-testid="stSelectbox"] svg {
+    fill: #64748B !important;
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+[data-testid="stButton"] > button {
+    background-color: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 10px !important;
+    color: #0A192F !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    padding: 8px 20px !important;
+    transition: all 0.18s ease !important;
+    box-shadow: none !important;
+    letter-spacing: 0.01em;
+}
+[data-testid="stButton"] > button:hover {
+    border-color: #00875A !important;
+    color: #00875A !important;
+    background-color: #F0FDF4 !important;
+}
+/* Primary button */
+[data-testid="stButton"] > button[kind="primary"] {
+    background-color: #00875A !important;
+    border-color: #00875A !important;
+    color: #FFFFFF !important;
+}
+[data-testid="stButton"] > button[kind="primary"]:hover {
+    background-color: #006B4E !important;
+    border-color: #006B4E !important;
+    color: #FFFFFF !important;
+}
+
+/* ── Text Input & Textarea ──────────────────────────────── */
+[data-testid="stTextInput"] input,
+[data-testid="stTextArea"] textarea,
+[data-testid="stNumberInput"] input {
+    background-color: #FFFFFF !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 10px !important;
+    color: #0A192F !important;
+    font-size: 0.875rem !important;
+    box-shadow: none !important;
+}
+[data-testid="stTextInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus,
+[data-testid="stNumberInput"] input:focus {
+    border-color: #00875A !important;
+    box-shadow: 0 0 0 3px rgba(0, 135, 90, 0.12) !important;
+}
+
+/* ── Checkbox & Radio ───────────────────────────────────── */
+[data-testid="stCheckbox"] label,
+[data-testid="stRadio"] label {
+    color: #0A192F !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+}
+
+/* ── Multiselect ────────────────────────────────────────── */
+[data-baseweb="tag"] {
+    background-color: #E6F8F3 !important;
+    border-radius: 6px !important;
+    color: #006B4E !important;
+    font-weight: 600 !important;
+}
+
+/* ── Labels & form text ─────────────────────────────────── */
+[data-testid="stWidgetLabel"] p,
+label[data-testid="stWidgetLabel"] {
+    color: #475569 !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+}
+
+/* ── Sidebar (keep collapsed/hidden) ───────────────────── */
+[data-testid="stSidebar"] {
+    display: none !important;
+}
+
 /* Clean Professional Top Navigation & Branding */
 .hh-brand-title {
     font-size: 1.6rem;

@@ -40,15 +40,81 @@ class ChatRequest(BaseModel):
     message: str
 
 # ──────────────────────────────────────────
-# Endpoints
+# Endpoints & Adapters
 # ──────────────────────────────────────────
+
+def adapt_lab(lab):
+    return {
+        "id": lab.id,
+        "code": "L-" + lab.id[-2:],
+        "name": lab.name,
+        "facilityType": lab.type,
+        "address": lab.address,
+        "city": "Seattle",
+        "state": "WA",
+        "epaId": lab.epa_facility_id,
+        "contactName": lab.contact_person,
+        "contactEmail": "contact@example.com",
+        "contactPhone": lab.phone,
+        "dockType": "Standard Dock",
+        "operationalStatus": "active" if lab.is_participating else "cancelled",
+        "activeDrumCount": sum(1 for w in state.waste_items if w.lab_id == lab.id and w.status == "AVAILABLE"),
+        "totalVolumeGal": sum(w.volume_liters * 0.264172 for w in state.waste_items if w.lab_id == lab.id),
+        "safetyAuditScore": 95,
+        "lastInspectionDate": "2026-09-01",
+        "specialHandlingNotes": lab.storage_location
+    }
+
+def adapt_waste(w):
+    return {
+        "id": w.id,
+        "trackingId": "TRK-" + w.id,
+        "labId": w.lab_id,
+        "labName": next((l.name for l in state.labs if l.id == w.lab_id), "Unknown"),
+        "chemicalName": w.name,
+        "commonName": w.chemical_formula or "Chemical Waste",
+        "casNumber": "00-00-0",
+        "hazardClass": w.epa_group.replace("_", " ").title(),
+        "epaWasteCode": "D001",
+        "dotProperShippingName": w.dot_class,
+        "unNumber": w.un_code,
+        "containerType": "55-gal Poly Drum",
+        "volumeGal": w.volume_liters * 0.264172,
+        "weightLbs": w.volume_liters * 2.2,
+        "urgency": w.urgency.lower(),
+        "status": "queued" if w.status == "IN_LOT" else "available",
+        "storageBay": "Main Bay",
+        "dateLogged": w.expiration_date,
+        "notes": w.notes
+    }
+
+def adapt_lot(lot):
+    return {
+        "id": lot.id,
+        "runCode": lot.lot_number,
+        "scheduledDate": lot.scheduled_date,
+        "haulerName": lot.hauler_name,
+        "haulerVehicleId": lot.hauler_truck_plate,
+        "driverName": lot.hauler_driver_name,
+        "vehicleCapacityGal": 500,
+        "currentVolumeGal": lot.total_volume_liters * 0.264172,
+        "currentWeightLbs": lot.total_volume_liters * 2.2,
+        "utilizationPercent": (lot.total_volume_liters / lot.target_threshold_liters) * 100,
+        "status": "scheduled",
+        "items": [adapt_waste(next((w for w in state.waste_items if w.id == wid), None)) for wid in lot.waste_item_ids if next((w for w in state.waste_items if w.id == wid), None)],
+        "stops": [],
+        "chemiGuardVerified": True,
+        "verificationHash": "Verified_SHA256",
+        "manifestNumber": "MANIFEST-01",
+        "tsdfFacility": "Regional Disposal"
+    }
 
 @app.get("/api/state")
 def get_current_state():
     return {
-        "labs": state.labs,
-        "wasteItems": state.waste_items,
-        "pickupLots": state.pickup_lots,
+        "labs": [adapt_lab(l) for l in state.labs],
+        "wasteItems": [adapt_waste(w) for w in state.waste_items],
+        "pickupLots": [adapt_lot(lot) for lot in state.pickup_lots],
         "networkMode": state.network_mode,
         "disruptionLogs": state.disruption_logs,
     }

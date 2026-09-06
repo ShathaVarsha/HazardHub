@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
+import dataclasses
 
 from storage.state import get_state
 from engines.quotapacker import QuotaPackerEngine, AutoBundleOptions
@@ -39,6 +40,10 @@ class RejectItemRequest(BaseModel):
 class ChatRequest(BaseModel):
     message: str
 
+class PairTestRequest(BaseModel):
+    item_a_id: str
+    item_b_id: str
+
 # ──────────────────────────────────────────
 # Endpoints & Adapters
 # ──────────────────────────────────────────
@@ -59,7 +64,7 @@ def adapt_lab(lab):
         "dockType": "Standard Dock",
         "operationalStatus": "active" if lab.is_participating else "cancelled",
         "activeDrumCount": sum(1 for w in state.waste_items if w.lab_id == lab.id and w.status == "AVAILABLE"),
-        "totalVolumeGal": sum(w.volume_liters * 0.264172 for w in state.waste_items if w.lab_id == lab.id),
+        "totalVolumeLiters": sum(w.volume_liters for w in state.waste_items if w.lab_id == lab.id),
         "safetyAuditScore": 95,
         "lastInspectionDate": "2026-09-01",
         "specialHandlingNotes": lab.storage_location
@@ -79,7 +84,7 @@ def adapt_waste(w):
         "dotProperShippingName": w.dot_class,
         "unNumber": w.un_code,
         "containerType": "55-gal Poly Drum",
-        "volumeGal": w.volume_liters * 0.264172,
+        "volumeLiters": w.volume_liters,
         "weightLbs": w.volume_liters * 2.2,
         "urgency": w.urgency.lower(),
         "status": "queued" if w.status == "IN_LOT" else "available",
@@ -96,8 +101,8 @@ def adapt_lot(lot):
         "haulerName": lot.hauler_name,
         "haulerVehicleId": lot.hauler_truck_plate,
         "driverName": lot.hauler_driver_name,
-        "vehicleCapacityGal": 500,
-        "currentVolumeGal": lot.total_volume_liters * 0.264172,
+        "vehicleCapacityLiters": 1892.7,
+        "currentVolumeLiters": lot.total_volume_liters,
         "currentWeightLbs": lot.total_volume_liters * 2.2,
         "utilizationPercent": (lot.total_volume_liters / lot.target_threshold_liters) * 100,
         "status": "scheduled",
@@ -141,7 +146,7 @@ def auto_bundle_waste():
 def cancel_lab(req: CancelLabRequest):
     try:
         recovery_plan = state.handle_lab_cancellation(req.lab_id)
-        return {"status": "success", "recovery": recovery_plan.model_dump() if recovery_plan else None}
+        return {"status": "success", "recovery": dataclasses.asdict(recovery_plan) if recovery_plan else None}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -149,7 +154,7 @@ def cancel_lab(req: CancelLabRequest):
 def reject_container(req: RejectItemRequest):
     try:
         recovery_plan = state.handle_canister_rejection(req.pickup_lot_id, req.waste_item_id, req.reason)
-        return {"status": "success", "recovery": recovery_plan.model_dump() if recovery_plan else None}
+        return {"status": "success", "recovery": dataclasses.asdict(recovery_plan) if recovery_plan else None}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -160,6 +165,29 @@ def chat_with_agent(req: ChatRequest):
         return {"status": "success", "message": response.content, "tool_calls": [tc.model_dump() for tc in response.tool_calls]}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/chemiguard/test")
+def test_chemical_pair(req: PairTestRequest):
+    item_a = next((w for w in state.waste_items if w.id == req.item_a_id), None)
+    item_b = next((w for w in state.waste_items if w.id == req.item_b_id), None)
+    if not item_a or not item_b:
+        raise HTTPException(status_code=404, detail="Waste item not found")
+        
+    from engines.chemiguard import ChemiGuardEngine
+    issue = ChemiGuardEngine.check_pair(item_a, item_b)
+    
+    if issue is None:
+        return {"isCompatible": True, "violation": None}
+    else:
+        return {
+            "isCompatible": False, 
+            "violation": {
+                "reason": issue.hazard_description,
+                "reactionConsequence": issue.consequence,
+                "epaCitation": "EPA 40 CFR 264.177",
+                "dotCitation": "DOT 49 CFR 177.848"
+            }
+        }
 
 @app.post("/api/reset")
 def reset_database():

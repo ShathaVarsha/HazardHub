@@ -14,7 +14,6 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { WasteItem, Lab, PoolingRun, AIOperationsRecord } from '../types';
-import { processAgentQuery } from '../engines/aiAgent';
 import { NavigationPage } from '../components/Navbar';
 
 interface AIOperationsPageProps {
@@ -23,6 +22,8 @@ interface AIOperationsPageProps {
   runs: PoolingRun[];
   onNavigate: (page: NavigationPage) => void;
 }
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export const AIOperationsPage: React.FC<AIOperationsPageProps> = ({
   wasteItems,
@@ -79,7 +80,27 @@ export const AIOperationsPage: React.FC<AIOperationsPageProps> = ({
     setIsLoading(true);
 
     try {
-      const record = await processAgentQuery(q, { wasteItems, labs, runs });
+      const res = await fetch(`${API_BASE}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: q }),
+      });
+      const data = await res.json();
+      
+      const record: AIOperationsRecord = {
+        id: `msg-${Date.now()}`,
+        query: q,
+        invokedEngine: data.tool_calls && data.tool_calls.length > 0 ? data.tool_calls[0].name : 'Direct Response',
+        invokedTool: data.tool_calls && data.tool_calls.length > 0 ? `${data.tool_calls[0].name}(...)` : 'None',
+        deterministicResult: {
+          status: 'PROCESSED',
+          summary: 'Agent successfully parsed request',
+          details: {},
+        },
+        explanation: data.message,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      
       setMessages((prev) => [...prev, record]);
     } catch (err) {
       console.error(err);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Trash2,
   Search,
@@ -14,7 +14,6 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { WasteItem, Lab, HazardClass, UrgencyLevel, WasteStatus } from '../types';
-import { chemiGuard } from '../engines/chemiGuard';
 import { NavigationPage } from '../components/Navbar';
 
 interface WasteManagementPageProps {
@@ -23,6 +22,8 @@ interface WasteManagementPageProps {
   onAddWasteItem: (item: WasteItem) => void;
   onNavigate: (page: NavigationPage) => void;
 }
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
   wasteItems,
@@ -40,6 +41,7 @@ export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
   const [isPairwiseModalOpen, setIsPairwiseModalOpen] = useState(false);
   const [pairItemAId, setPairItemAId] = useState<string>(wasteItems[0]?.id || '');
   const [pairItemBId, setPairItemBId] = useState<string>(wasteItems[2]?.id || '');
+  const [pairwiseResult, setPairwiseResult] = useState<any>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // New item form state
@@ -70,10 +72,19 @@ export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
     return matchesSearch && matchesLab && matchesHazard && matchesUrgency && matchesStatus;
   });
 
-  // Calculate pair test result
-  const itemA = wasteItems.find((w) => w.id === pairItemAId) || wasteItems[0];
-  const itemB = wasteItems.find((w) => w.id === pairItemBId) || wasteItems[1];
-  const pairwiseResult = itemA && itemB ? chemiGuard.validatePair(itemA, itemB) : null;
+  // Fetch pairwise result when selected items change
+  useEffect(() => {
+    if (isPairwiseModalOpen && pairItemAId && pairItemBId) {
+      fetch(`${API_BASE}/api/chemiguard/test`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item_a_id: pairItemAId, item_b_id: pairItemBId }),
+      })
+        .then((res) => res.json())
+        .then((data) => setPairwiseResult(data))
+        .catch((err) => console.error("Error validating pair:", err));
+    }
+  }, [isPairwiseModalOpen, pairItemAId, pairItemBId]);
 
   const handleCreateWaste = (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +102,7 @@ export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
       dotProperShippingName: `${newHazardClass} n.o.s.`,
       unNumber: 'UN1993',
       containerType: '55-gal Poly Drum',
-      volumeGal: Number(newVolumeGal),
+      volumeLiters: Number(newVolumeGal),
       weightLbs: Math.round(Number(newVolumeGal) * 8.4),
       ph: newPh,
       urgency: newUrgency,
@@ -297,7 +308,7 @@ export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
 
                     {/* Volume */}
                     <td className="px-4 py-3 text-right">
-                      <div className="font-extrabold text-slate-900 text-xs">{item.volumeGal} gal</div>
+                      <div className="font-extrabold text-slate-900 text-xs">{item.volumeLiters} L</div>
                       <div className="text-[11px] text-slate-500">{item.weightLbs} lbs</div>
                     </td>
 
@@ -372,7 +383,7 @@ export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
               </div>
 
               <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
-                <div><strong>Volume:</strong> {selectedItemDetail.volumeGal} gallons</div>
+                <div><strong>Volume:</strong> {selectedItemDetail.volumeLiters} Llons</div>
                 <div><strong>Net Weight:</strong> {selectedItemDetail.weightLbs} lbs</div>
                 <div><strong>pH:</strong> {selectedItemDetail.ph ?? 'N/A (Organic)'}</div>
                 <div><strong>Flash Point:</strong> {selectedItemDetail.flashPointF !== undefined ? `${selectedItemDetail.flashPointF}°F` : 'Non-flammable'}</div>

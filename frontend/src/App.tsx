@@ -40,7 +40,7 @@ export default function App() {
   React.useEffect(() => {
     const fetchState = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/state');
+        const res = await fetch(`${API_BASE}/api/state`);
         const data = await res.json();
         setLabs(data.labs || []);
         setWasteItems(data.wasteItems || []);
@@ -75,11 +75,11 @@ export default function App() {
   // 1. Auto-Bundle handler (Calls Python FastAPI)
   const handleAutoBundle = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/autobundle', { method: 'POST' });
+      const response = await fetch(`${API_BASE}/api/autobundle`, { method: 'POST' });
       if (!response.ok) throw new Error("Backend auto-bundle failed");
       const data = await response.json();
       
-      const stateRes = await fetch('http://localhost:8000/api/state');
+      const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setPoolingRuns(stateData.pickupLots || []);
       setWasteItems(stateData.wasteItems || []);
@@ -97,14 +97,14 @@ export default function App() {
   // 2. Lab Cancellation Failover handler (Calls Python FastAPI)
   const handleCancelLab = async (labId: string) => {
     try {
-      const response = await fetch('http://localhost:8000/api/failover', {
+      const response = await fetch(`${API_BASE}/api/failover`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lab_id: labId })
       });
       if (!response.ok) throw new Error("Failover failed");
       
-      const stateRes = await fetch('http://localhost:8000/api/state');
+      const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setLabs(stateData.labs || []);
       setWasteItems(stateData.wasteItems || []);
@@ -119,14 +119,14 @@ export default function App() {
   // 3. Hauler Dock Rejection handler (Calls Python FastAPI)
   const handleRejectItem = async (itemId: string, reason: string) => {
     try {
-      const response = await fetch('http://localhost:8000/api/reject', {
+      const response = await fetch(`${API_BASE}/api/reject`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pickup_lot_id: 'default', waste_item_id: itemId, reason })
       });
       if (!response.ok) throw new Error("Reject failed");
       
-      const stateRes = await fetch('http://localhost:8000/api/state');
+      const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setWasteItems(stateData.wasteItems || []);
       setPoolingRuns(stateData.pickupLots || []);

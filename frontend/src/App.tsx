@@ -40,6 +40,7 @@ export default function App() {
   React.useEffect(() => {
     const fetchState = async () => {
       try {
+
         const res = await fetch(`${API_BASE}/api/state`);
         const data = await res.json();
         setLabs(data.labs || []);

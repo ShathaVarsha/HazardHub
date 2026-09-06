@@ -23,7 +23,7 @@ interface WasteManagementPageProps {
   onNavigate: (page: NavigationPage) => void;
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE = import.meta.env.PROD ? '' : 'http://localhost:8000';
 
 export const WasteManagementPage: React.FC<WasteManagementPageProps> = ({
   wasteItems,

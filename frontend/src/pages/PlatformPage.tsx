@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
   ShieldAlert,
   Boxes,
@@ -67,7 +67,7 @@ export const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
             <span className="text-xs font-bold text-teal-700 font-mono">STAGE 03</span>
             <h4 className="text-sm font-bold text-slate-900">QuotaPacker™ Pooling</h4>
             <p className="text-xs text-slate-600">
-              Multi-constraint knapsack algorithm auto-packs compatible items into certified truck batches up to 800 gal/vehicle.
+              Multi-constraint knapsack algorithm auto-packs compatible items into certified truck batches up to 3028 L/vehicle.
             </p>
             <div className="text-[11px] text-teal-700 font-semibold font-mono">Payload &gt;90% Capacity</div>
           </div>
@@ -225,7 +225,7 @@ export const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
               <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
                 <div className="font-bold text-slate-900 text-sm">Vehicle Capacity Bounds</div>
                 <p className="text-xs text-slate-600">
-                  Strictly caps cargo at 800 gallons or 16 drums per standardized DOT Class-A straight truck to avoid axle weight and volumetric overfill violations.
+                  Strictly caps cargo at 3028 L or 16 drums per standardized DOT Class-A straight truck to avoid axle weight and volumetric overfill violations.
                 </p>
               </div>
 

@@ -118,7 +118,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
                 <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-100">
                   <div className="text-xs text-slate-500 font-medium">Staged Waste Volume</div>
-                  <div className="text-2xl font-black text-slate-900 mt-1">{totalVolume} gal</div>
+                  <div className="text-2xl font-black text-slate-900 mt-1">{totalVolume} L</div>
                   <div className="text-[11px] text-slate-500 font-medium mt-0.5">30 monitored lots</div>
                 </div>
 
@@ -241,7 +241,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               Autonomous Bin-Packing
             </p>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Multi-constraint knapsack optimizer that bundles compatible waste lots up to truck limits (800 gal / 16 drums) while respecting lab dock schedules, physical segregation, and urgency tiers.
+              Multi-constraint knapsack optimizer that bundles compatible waste lots up to truck limits (3028 L / 16 drums) while respecting lab dock schedules, physical segregation, and urgency tiers.
             </p>
           </div>
 
@@ -454,7 +454,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <div className="p-4 rounded-lg bg-white border border-slate-200 font-mono text-xs space-y-2">
                   <div className="text-slate-500">// Protocol: HAZARDHUB-CUSTODY-V1</div>
                   <div className="text-teal-900 font-semibold">
-                    {`{"manifest": "EPA-8700-WA-482910", "drums": 16, "vol_gal": 785}`}
+                    {`{"manifest": "EPA-8700-WA-482910", "drums": 16, "vol_L": 785}`}
                   </div>
                   <div className="text-slate-500">// Digital Signature:</div>
                   <div className="text-xs text-slate-700 break-all bg-slate-50 p-2 rounded border border-slate-200">
@@ -493,7 +493,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="p-6 rounded-xl bg-white border border-slate-200 text-center space-y-1 shadow-xs">
-            <div className="text-3xl sm:text-4xl font-black text-slate-900">{totalVolume} gal</div>
+            <div className="text-3xl sm:text-4xl font-black text-slate-900">{totalVolume} L</div>
             <div className="text-xs font-bold text-slate-500 uppercase tracking-wide">Available Waste Volume</div>
             <div className="text-xs text-teal-700 font-medium pt-1">Across 30 monitored lots</div>
           </div>

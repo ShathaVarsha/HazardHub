@@ -190,7 +190,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                 {/* Utilization Progress Bar */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs font-semibold text-slate-700">
-                    <span>Truck Payload Volume ({run.currentVolumeGal} / {run.vehicleCapacityGal} gal)</span>
+                    <span>Truck Payload Volume ({run.currentVolumeGal} / {run.vehicleCapacityGal} L)</span>
                     <span className="text-teal-800 font-bold">{run.utilizationPercent}% Capacity</span>
                   </div>
                   <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
@@ -228,7 +228,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="font-semibold text-slate-800">{stop.volumeGal} gal</div>
+                          <div className="font-semibold text-slate-800">{stop.volumeGal} L</div>
                           <div className="text-[10px] text-slate-500">{stop.scheduledWindow}</div>
                         </div>
                       </div>
@@ -315,7 +315,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                     ChemiGuard™ Deterministic Verification: 100% PASS
                   </div>
                   <div className="text-xs text-emerald-800">
-                    Zero chemical incompatibility violations detected across {manualSelectedItemIds.length} selected items ({manualEval.totalVolumeGal} gal).
+                    Zero chemical incompatibility violations detected across {manualSelectedItemIds.length} selected items ({manualEval.totalVolumeGal} L).
                   </div>
                 </div>
               </div>
@@ -333,7 +333,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
           <div className="flex items-center justify-between text-xs text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-200">
             <span>Click checkboxes below to add or remove drums from your proposed pickup run. ChemiGuard computes pairwise compatibility in real-time.</span>
             <span className="font-bold text-slate-900">
-              Selected: {manualSelectedItemIds.length} Drums ({manualEval.totalVolumeGal} gal / {manualEval.utilizationPercent}%)
+              Selected: {manualSelectedItemIds.length} Drums ({manualEval.totalVolumeGal} L / {manualEval.utilizationPercent}%)
             </span>
           </div>
 
@@ -363,7 +363,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                         {item.trackingId}
                       </span>
                       <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700">
-                        {item.volumeGal} gal
+                        {item.volumeGal} L
                       </span>
                     </div>
                     <div className="font-bold text-xs text-slate-900 truncate">
@@ -423,7 +423,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                     >
                       <div>
                         <div className="font-bold text-slate-900">{lab.name}</div>
-                        <div className="text-slate-500">{lab.city} • {lab.totalVolumeGal} gal staged</div>
+                        <div className="text-slate-500">{lab.city} • {lab.totalVolumeGal} L staged</div>
                       </div>
                       <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded border border-amber-200">
                         {lab.operationalStatus === 'cancelled' ? 'Cancelled' : 'Drop Lab'}
@@ -459,7 +459,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                     >
                       <div>
                         <div className="font-bold text-slate-900">{item.chemicalName}</div>
-                        <div className="text-slate-500">{item.trackingId} • {item.volumeGal} gal</div>
+                        <div className="text-slate-500">{item.trackingId} • {item.volumeGal} L</div>
                       </div>
                       <span className="text-xs font-bold text-red-800 bg-red-50 px-2 py-1 rounded border border-red-200">
                         Reject Drum
@@ -510,7 +510,7 @@ export const PickupPoolingPage: React.FC<PickupPoolingPageProps> = ({
                     <div>
                       <div className="font-bold text-slate-900">{item.chemicalName}</div>
                       <div className="text-[11px] text-slate-500">
-                        {item.labName} • {item.hazardClass} • {item.volumeGal} gal
+                        {item.labName} • {item.hazardClass} • {item.volumeGal} L
                       </div>
                     </div>
                     <span className="font-mono text-teal-800 text-[11px] font-bold">

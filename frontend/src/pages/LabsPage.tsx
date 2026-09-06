@@ -169,7 +169,7 @@ export const LabsPage: React.FC<LabsPageProps> = ({
                   <div className="p-2 rounded bg-slate-50 border border-slate-100">
                     <div className="text-slate-500 font-medium text-[11px]">Volume</div>
                     <div className="text-sm font-extrabold text-slate-900 mt-0.5">
-                      {isCancelled ? 0 : labVolume} gal
+                      {isCancelled ? 0 : labVolume} L
                     </div>
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export const LabsPage: React.FC<LabsPageProps> = ({
                       <div>
                         <div className="font-bold text-slate-900">{item.chemicalName}</div>
                         <div className="text-[11px] text-slate-500">
-                          {item.hazardClass} • {item.containerType} • {item.volumeGal} gal
+                          {item.hazardClass} • {item.containerType} • {item.volumeGal} L
                         </div>
                       </div>
                       <span

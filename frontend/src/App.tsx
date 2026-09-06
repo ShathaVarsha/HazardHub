@@ -40,7 +40,7 @@ export default function App() {
   React.useEffect(() => {
     const fetchState = async () => {
       try {
-
+        const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
         const res = await fetch(`${API_BASE}/api/state`);
         const data = await res.json();
         setLabs(data.labs || []);
@@ -76,10 +76,12 @@ export default function App() {
   // 1. Auto-Bundle handler (Calls Python FastAPI)
   const handleAutoBundle = async () => {
     try {
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_BASE}/api/autobundle`, { method: 'POST' });
       if (!response.ok) throw new Error("Backend auto-bundle failed");
       const data = await response.json();
       
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setPoolingRuns(stateData.pickupLots || []);
@@ -98,6 +100,7 @@ export default function App() {
   // 2. Lab Cancellation Failover handler (Calls Python FastAPI)
   const handleCancelLab = async (labId: string) => {
     try {
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_BASE}/api/failover`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -105,6 +108,7 @@ export default function App() {
       });
       if (!response.ok) throw new Error("Failover failed");
       
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setLabs(stateData.labs || []);
@@ -120,6 +124,7 @@ export default function App() {
   // 3. Hauler Dock Rejection handler (Calls Python FastAPI)
   const handleRejectItem = async (itemId: string, reason: string) => {
     try {
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_BASE}/api/reject`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -127,6 +132,7 @@ export default function App() {
       });
       if (!response.ok) throw new Error("Reject failed");
       
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setWasteItems(stateData.wasteItems || []);

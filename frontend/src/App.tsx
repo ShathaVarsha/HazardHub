@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Navbar, NavigationPage } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -76,20 +76,17 @@ export default function App() {
   // 1. Auto-Bundle handler (Calls Python FastAPI)
   const handleAutoBundle = async () => {
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${API_BASE}/api/autobundle`, { method: 'POST' });
+const response = await fetch(`${API_BASE}/api/autobundle`, { method: 'POST' });
       if (!response.ok) throw new Error("Backend auto-bundle failed");
       const data = await response.json();
-      
-      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const stateRes = await fetch(`${API_BASE}/api/state`);
+const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setPoolingRuns(stateData.pickupLots || []);
       setWasteItems(stateData.wasteItems || []);
       
       showNotification(
         'success',
-        'QuotaPacker™ Optimization Complete',
+        'QuotaPackerâ„¢ Optimization Complete',
         data.message || 'Synthesized pickup runs with 100% ChemiGuard safety compliance.'
       );
     } catch (e) {
@@ -100,22 +97,19 @@ export default function App() {
   // 2. Lab Cancellation Failover handler (Calls Python FastAPI)
   const handleCancelLab = async (labId: string) => {
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${API_BASE}/api/failover`, {
+const response = await fetch(`${API_BASE}/api/failover`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lab_id: labId })
       });
       if (!response.ok) throw new Error("Failover failed");
-      
-      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const stateRes = await fetch(`${API_BASE}/api/state`);
+const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setLabs(stateData.labs || []);
       setWasteItems(stateData.wasteItems || []);
       setPoolingRuns(stateData.pickupLots || []);
 
-      showNotification('warning', 'ResilienceGuard™ Failover Executed', `Lab ${labId} dropped and lot recalculated.`);
+      showNotification('warning', 'ResilienceGuardâ„¢ Failover Executed', `Lab ${labId} dropped and lot recalculated.`);
     } catch (e) {
       showNotification('error', 'Failover Failed', String(e));
     }
@@ -124,16 +118,13 @@ export default function App() {
   // 3. Hauler Dock Rejection handler (Calls Python FastAPI)
   const handleRejectItem = async (itemId: string, reason: string) => {
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${API_BASE}/api/reject`, {
+const response = await fetch(`${API_BASE}/api/reject`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pickup_lot_id: 'default', waste_item_id: itemId, reason })
       });
       if (!response.ok) throw new Error("Reject failed");
-      
-      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const stateRes = await fetch(`${API_BASE}/api/state`);
+const stateRes = await fetch(`${API_BASE}/api/state`);
       const stateData = await stateRes.json();
       setWasteItems(stateData.wasteItems || []);
       setPoolingRuns(stateData.pickupLots || []);
@@ -181,7 +172,7 @@ export default function App() {
             'info',
             next ? 'Offline Mode Activated' : 'Cloud Sync Restored',
             next
-              ? 'Local key-value storage active. CustodySentinel™ QR handoffs will function air-gapped.'
+              ? 'Local key-value storage active. CustodySentinelâ„¢ QR handoffs will function air-gapped.'
               : 'Network connectivity re-established. Queued custody handoffs synced to regional registry.'
           );
         }}
@@ -331,3 +322,4 @@ export default function App() {
     </div>
   );
 }
+
